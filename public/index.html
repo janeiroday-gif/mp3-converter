@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YouTube naar MP3</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      background: white;
+      width: 90%;
+      max-width: 600px;
+      padding: 40px;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      margin-bottom: 10px;
+    }
+
+    p {
+      color: #666;
+    }
+
+    input {
+      width: 100%;
+      padding: 15px;
+      margin-top: 20px;
+      box-sizing: border-box;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      font-size: 16px;
+    }
+
+    button {
+      width: 100%;
+      padding: 15px;
+      margin-top: 15px;
+      border: none;
+      border-radius: 10px;
+      background: #111;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      opacity: 0.85;
+    }
+
+    #result {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <h1>YouTube naar MP3</h1>
+
+    <p>Plak hieronder een YouTube-link.</p>
+
+    <input
+      type="text"
+      id="youtubeUrl"
+      placeholder="https://www.youtube.com/watch?v=..."
+    >
+
+    <button onclick="convertVideo()">
+      Converteer naar MP3
+    </button>
+
+    <div id="result"></div>
+  </div>
+
+  <script>
+    async function convertVideo() {
+      const url = document.getElementById("youtubeUrl").value;
+      const result = document.getElementById("result");
+
+      if (!url) {
+        result.innerHTML = "Vul eerst een YouTube-link in.";
+        return;
+      }
+
+      result.innerHTML = "Even verwerken...";
+
+      const response = await fetch("/convert", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ url: url })
+      });
+
+      const data = await response.json();
+
+      result.innerHTML = data.message || data.error;
+    }
+  </script>
+
+</body>
+</html>
