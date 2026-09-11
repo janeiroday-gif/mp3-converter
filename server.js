@@ -34,12 +34,6 @@ app.get("/", (req, res) => {
 });
 
 
-/*
-  Analyseert het gemaakte MP3-bestand.
-  We bepalen:
-  - BPM
-  - Key / toonsoort
-*/
 async function analyzeAudio(filePath) {
   try {
     const audioModule = await import("audio");
@@ -47,8 +41,10 @@ async function analyzeAudio(filePath) {
 
     const track = await audio(filePath);
 
-    const bpmResult = await track.stat("bpm");
-    const keyResult = await track.stat("key");
+    const [bpmResult, keyResult] = await Promise.all([
+      track.stat("bpm"),
+      track.stat("key")
+    ]);
 
     let bpm = null;
     let key = null;
@@ -57,8 +53,16 @@ async function analyzeAudio(filePath) {
       bpm = Math.round(bpmResult);
     }
 
+    if (bpmResult && typeof bpmResult.value === "number") {
+      bpm = Math.round(bpmResult.value);
+    }
+
     if (keyResult && keyResult.label) {
       key = keyResult.label;
+    }
+
+    if (typeof keyResult === "string") {
+      key = keyResult;
     }
 
     return {
@@ -67,7 +71,7 @@ async function analyzeAudio(filePath) {
     };
 
   } catch (error) {
-    console.error("Audio analyse mislukt:", error);
+    console.error("Audio analyse:", error.message);
 
     return {
       bpm: null,
@@ -77,10 +81,6 @@ async function analyzeAudio(filePath) {
 }
 
 
-/*
-  URL-conversie.
-  Voor nu blijft dit beperkt tot eigen/geautoriseerde bestanden.
-*/
 app.post("/convert", (req, res) => {
   const { url } = req.body;
 
@@ -98,9 +98,6 @@ app.post("/convert", (req, res) => {
 });
 
 
-/*
-  Upload + MP3-conversie + BPM/Key analyse
-*/
 app.post("/upload", upload.single("file"), (req, res) => {
 
   if (!req.file) {
@@ -111,47 +108,67 @@ app.post("/upload", upload.single("file"), (req, res) => {
 
   const inputPath = req.file.path;
 
-  const originalName = path.parse(req.file.originalname).name;
+  const originalName =
+    path.parse(req.file.originalname).name
+      .replace(/[^a-zA-Z0-9-_ ]/g, "")
+      .substring(0, 80);
 
   const outputName =
     originalName + "-" + Date.now() + ".mp3";
 
-  const outputPath = path.join(outputDir, outputName);
+  const outputPath =
+    path.join(outputDir, outputName);
 
   ffmpeg(inputPath)
-    .toFormat("mp3")
+    .noVideo()
     .audioCodec("libmp3lame")
     .audioBitrate("192k")
+    .audioChannels(2)
+    .audioFrequency(44100)
+    .outputOptions([
+      "-threads",
+      "0",
+      "-map_metadata",
+      "-1"
+    ])
+    .format("mp3")
+
+    .on("start", () => {
+      console.log("Conversie gestart:", req.file.originalname);
+    })
 
     .on("end", async () => {
 
       fs.unlink(inputPath, () => {});
 
-      console.log("MP3 conversie klaar.");
+      console.log("Conversie klaar:", outputName);
 
       const analysis = await analyzeAudio(outputPath);
-
-      console.log("Analyse:", analysis);
 
       res.json({
         success: true,
         message: "Je MP3 is klaar!",
         bpm: analysis.bpm,
         key: analysis.key,
-        downloadUrl: `/download/${encodeURIComponent(outputName)}`
+        downloadUrl:
+          `/download/${encodeURIComponent(outputName)}`
       });
 
     })
 
     .on("error", (error) => {
 
-      console.error(error);
+      console.error("FFmpeg:", error.message);
 
       fs.unlink(inputPath, () => {});
+      fs.unlink(outputPath, () => {});
 
-      res.status(500).json({
-        error: "Het bestand kon niet naar MP3 worden geconverteerd."
-      });
+      if (!res.headersSent) {
+        res.status(500).json({
+          error:
+            "Het bestand kon niet naar MP3 worden geconverteerd."
+        });
+      }
 
     })
 
@@ -159,29 +176,36 @@ app.post("/upload", upload.single("file"), (req, res) => {
 });
 
 
-/*
-  MP3 downloaden
-*/
 app.get("/download/:filename", (req, res) => {
 
-  const filename = path.basename(req.params.filename);
+  const filename =
+    path.basename(req.params.filename);
 
-  const filePath = path.join(outputDir, filename);
+  const filePath =
+    path.join(outputDir, filename);
 
   if (!fs.existsSync(filePath)) {
-    return res.status(404).send("Bestand niet gevonden.");
+    return res.status(404).send(
+      "Bestand niet gevonden."
+    );
   }
 
-  res.download(filePath, filename, (err) => {
+  res.download(
+    filePath,
+    filename,
+    (err) => {
 
-    if (!err) {
-      fs.unlink(filePath, () => {});
+      if (!err) {
+        fs.unlink(filePath, () => {});
+      }
+
     }
-
-  });
+  );
 });
 
 
 app.listen(PORT, "0.0.0.0", () => {
-  console.log(`MP3Fast draait op poort ${PORT}`);
+  console.log(
+    `MP3Fast draait op poort ${PORT}`
+  );
 });
