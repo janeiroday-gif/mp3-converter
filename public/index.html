@@ -3,9 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>MP3Fast – Your video. Your MP3.</title>
 
   <style>
+
     * {
       box-sizing: border-box;
       margin: 0;
@@ -144,10 +146,38 @@
       font-size: 13px;
     }
 
+    .analysis {
+      display: none;
+      margin: 20px auto 0;
+      max-width: 420px;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .analysis-card {
+      background: #111116;
+      border: 1px solid #292930;
+      border-radius: 14px;
+      padding: 18px;
+    }
+
+    .analysis-label {
+      color: #777;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 7px;
+    }
+
+    .analysis-value {
+      font-size: 22px;
+      font-weight: bold;
+    }
+
     .download-btn {
       display: inline-block;
-      margin-top: 15px;
-      padding: 13px 22px;
+      margin-top: 18px;
+      padding: 14px 24px;
       background: #ff1744;
       color: white;
       text-decoration: none;
@@ -231,6 +261,7 @@
     }
 
     @media (max-width: 650px) {
+
       main {
         margin-top: 50px;
       }
@@ -248,212 +279,479 @@
         grid-template-columns: 1fr;
       }
 
+      .analysis {
+        grid-template-columns: 1fr 1fr;
+      }
+
       h1 {
         letter-spacing: -2px;
       }
+
     }
+
   </style>
+
 </head>
 
 <body>
 
   <header>
-    <div class="logo">MP3<span>FAST</span></div>
-    <div class="badge">Fast & Simple</div>
+
+    <div class="logo">
+      MP3<span>FAST</span>
+    </div>
+
+    <div class="badge">
+      Fast & Simple
+    </div>
+
   </header>
+
 
   <main>
 
-    <div class="tag">FAST • SIMPLE • FREE</div>
+    <div class="tag">
+      FAST • SIMPLE • FREE
+    </div>
+
 
     <h1>
       Your video.<br>
       Your <span>MP3.</span>
     </h1>
 
+
     <p class="subtitle">
       Convert your own or authorized media into high-quality MP3 audio.
       Simple, fast and designed for every device.
     </p>
 
+
     <div class="converter">
 
+
       <div class="input-row">
+
         <input
           id="urlInput"
           type="text"
           placeholder="Paste your video link here..."
         >
 
-        <button class="convert-btn" id="convertButton">
+        <button
+          class="convert-btn"
+          id="convertButton"
+        >
           Convert to MP3
         </button>
+
       </div>
 
+
       <div class="upload-option">
+
         or
-        <label for="fileInput">upload your own file</label>
+
+        <label for="fileInput">
+          upload your own file
+        </label>
 
         <input
           id="fileInput"
           type="file"
           accept="audio/*,video/*"
         >
+
       </div>
+
 
       <div id="status"></div>
 
+
+      <div
+        class="analysis"
+        id="analysis"
+      >
+
+        <div class="analysis-card">
+
+          <div class="analysis-label">
+            Key
+          </div>
+
+          <div
+            class="analysis-value"
+            id="keyValue"
+          >
+            —
+          </div>
+
+        </div>
+
+
+        <div class="analysis-card">
+
+          <div class="analysis-label">
+            BPM
+          </div>
+
+          <div
+            class="analysis-value"
+            id="bpmValue"
+          >
+            —
+          </div>
+
+        </div>
+
+      </div>
+
+
       <div id="downloadArea"></div>
 
+
     </div>
+
 
     <div class="features">
 
-      <div class="feature">
-        <div class="feature-icon">⚡</div>
-        <strong>Fast</strong>
-        <p>Quick and simple conversion with no unnecessary steps.</p>
-      </div>
 
       <div class="feature">
-        <div class="feature-icon">🎧</div>
-        <strong>Audio focused</strong>
-        <p>Get your music and audio in a clean MP3 format.</p>
+
+        <div class="feature-icon">
+          ⚡
+        </div>
+
+        <strong>
+          Fast
+        </strong>
+
+        <p>
+          Quick and simple conversion with no unnecessary steps.
+        </p>
+
       </div>
 
+
       <div class="feature">
-        <div class="feature-icon">📱</div>
-        <strong>Mobile friendly</strong>
-        <p>Works smoothly on phones, tablets and computers.</p>
+
+        <div class="feature-icon">
+          🎧
+        </div>
+
+        <strong>
+          Audio focused
+        </strong>
+
+        <p>
+          Get your music and audio in a clean MP3 format.
+        </p>
+
       </div>
+
+
+      <div class="feature">
+
+        <div class="feature-icon">
+          📱
+        </div>
+
+        <strong>
+          Mobile friendly
+        </strong>
+
+        <p>
+          Works smoothly on phones, tablets and computers.
+        </p>
+
+      </div>
+
 
     </div>
 
+
     <section class="how">
 
-      <h2>How it works</h2>
+      <h2>
+        How it works
+      </h2>
+
 
       <div class="steps">
 
+
         <div class="step">
-          <div class="number">1</div>
-          <strong>Paste or upload</strong><br>
+
+          <div class="number">
+            1
+          </div>
+
+          <strong>
+            Paste or upload
+          </strong>
+
+          <br>
+
           Add your own media file or an authorized link.
+
         </div>
 
+
         <div class="step">
-          <div class="number">2</div>
-          <strong>Convert</strong><br>
+
+          <div class="number">
+            2
+          </div>
+
+          <strong>
+            Convert
+          </strong>
+
+          <br>
+
           MP3Fast processes your audio.
+
         </div>
 
+
         <div class="step">
-          <div class="number">3</div>
-          <strong>Download</strong><br>
+
+          <div class="number">
+            3
+          </div>
+
+          <strong>
+            Download
+          </strong>
+
+          <br>
+
           Get your MP3 when the conversion is complete.
+
         </div>
+
 
       </div>
 
     </section>
 
+
   </main>
 
+
   <footer>
+
     © 2026 MP3Fast
+
   </footer>
+
 
   <script>
 
-    const urlInput = document.getElementById("urlInput");
-    const fileInput = document.getElementById("fileInput");
-    const convertButton = document.getElementById("convertButton");
-    const status = document.getElementById("status");
-    const downloadArea = document.getElementById("downloadArea");
+    const urlInput =
+      document.getElementById("urlInput");
 
-    fileInput.addEventListener("change", async () => {
+    const fileInput =
+      document.getElementById("fileInput");
 
-      if (!fileInput.files.length) {
-        return;
-      }
+    const convertButton =
+      document.getElementById("convertButton");
 
-      const file = fileInput.files[0];
+    const status =
+      document.getElementById("status");
 
-      status.textContent = "Converting " + file.name + "...";
-      downloadArea.innerHTML = "";
+    const downloadArea =
+      document.getElementById("downloadArea");
 
-      const formData = new FormData();
+    const analysis =
+      document.getElementById("analysis");
 
-      formData.append("file", file);
+    const keyValue =
+      document.getElementById("keyValue");
 
-      try {
+    const bpmValue =
+      document.getElementById("bpmValue");
 
-        const response = await fetch("/upload", {
-          method: "POST",
-          body: formData
-        });
 
-        const data = await response.json();
+    fileInput.addEventListener(
+      "change",
+      async () => {
 
-        if (data.success) {
+        if (!fileInput.files.length) {
+          return;
+        }
 
-          status.textContent = "✓ " + data.message;
 
-          const downloadButton = document.createElement("a");
+        const file =
+          fileInput.files[0];
 
-          downloadButton.href = data.downloadUrl;
-          downloadButton.textContent = "Download MP3";
-          downloadButton.className = "download-btn";
-          downloadButton.download = "";
 
-          downloadArea.appendChild(downloadButton);
+        status.textContent =
+          "Converting and analyzing " +
+          file.name +
+          "...";
 
-        } else {
 
-          status.textContent = data.error || "Conversion failed.";
+        downloadArea.innerHTML = "";
+
+        analysis.style.display = "none";
+
+
+        const formData =
+          new FormData();
+
+
+        formData.append(
+          "file",
+          file
+        );
+
+
+        try {
+
+          const response =
+            await fetch(
+              "/upload",
+              {
+                method: "POST",
+                body: formData
+              }
+            );
+
+
+          const data =
+            await response.json();
+
+
+          if (data.success) {
+
+            status.textContent =
+              "✓ " + data.message;
+
+
+            keyValue.textContent =
+              data.key || "Unknown";
+
+
+            bpmValue.textContent =
+              data.bpm
+                ? data.bpm + " BPM"
+                : "Unknown";
+
+
+            analysis.style.display =
+              "grid";
+
+
+            const downloadButton =
+              document.createElement("a");
+
+
+            downloadButton.href =
+              data.downloadUrl;
+
+
+            downloadButton.textContent =
+              "Download MP3";
+
+
+            downloadButton.className =
+              "download-btn";
+
+
+            downloadButton.download =
+              "";
+
+
+            downloadArea.appendChild(
+              downloadButton
+            );
+
+
+          } else {
+
+            status.textContent =
+              data.error ||
+              "Conversion failed.";
+
+          }
+
+
+        } catch (error) {
+
+          console.error(error);
+
+          status.textContent =
+            "Conversion failed. Please try again.";
 
         }
 
-      } catch (error) {
+      }
+    );
 
-        status.textContent = "Conversion failed. Please try again.";
+
+    convertButton.addEventListener(
+      "click",
+      async () => {
+
+        const url =
+          urlInput.value.trim();
+
+
+        if (!url) {
+
+          status.textContent =
+            "Please enter a link first.";
+
+          return;
+
+        }
+
+
+        status.textContent =
+          "Checking link...";
+
+
+        try {
+
+          const response =
+            await fetch(
+              "/convert",
+              {
+                method: "POST",
+
+                headers: {
+                  "Content-Type":
+                    "application/json"
+                },
+
+                body:
+                  JSON.stringify({
+                    url: url
+                  })
+
+              }
+            );
+
+
+          const data =
+            await response.json();
+
+
+          status.textContent =
+            data.error ||
+            data.message;
+
+
+        } catch (error) {
+
+          status.textContent =
+            "Something went wrong. Please try again.";
+
+        }
 
       }
-
-    });
-
-    convertButton.addEventListener("click", async () => {
-
-      const url = urlInput.value.trim();
-
-      if (!url) {
-        status.textContent = "Please enter a link first.";
-        return;
-      }
-
-      status.textContent = "Checking link...";
-
-      try {
-
-        const response = await fetch("/convert", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({ url: url })
-        });
-
-        const data = await response.json();
-
-        status.textContent = data.error || data.message;
-
-      } catch (error) {
-
-        status.textContent = "Something went wrong. Please try again.";
-
-      }
-
-    });
+    );
 
   </script>
 
