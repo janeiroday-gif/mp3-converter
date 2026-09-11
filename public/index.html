@@ -1,116 +1,792 @@
 <!DOCTYPE html>
+
 <html lang="nl">
+
 <head>
+
   <meta charset="UTF-8">
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>YouTube naar MP3</title>
+
+
+
+  <title>MP3Fast — YouTube naar MP3</title>
+
+  <meta name="description" content="MP3Fast is een eenvoudige en snelle manier om audio van video's te converteren.">
+
+
 
   <style>
-    body {
+
+    * {
+
+      box-sizing: border-box;
+
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f5f5f5;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
+
+      padding: 0;
+
     }
 
-    .container {
-      background: white;
-      width: 90%;
-      max-width: 600px;
-      padding: 40px;
-      border-radius: 20px;
-      text-align: center;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+
+
+    body {
+
+      font-family: Arial, Helvetica, sans-serif;
+
+      background:
+
+        radial-gradient(circle at top left, #252525 0, transparent 35%),
+
+        radial-gradient(circle at bottom right, #181818 0, transparent 35%),
+
+        #090909;
+
+      color: #ffffff;
+
+      min-height: 100vh;
+
     }
+
+
+
+    nav {
+
+      width: 100%;
+
+      padding: 22px 7%;
+
+      display: flex;
+
+      justify-content: space-between;
+
+      align-items: center;
+
+    }
+
+
+
+    .logo {
+
+      font-size: 25px;
+
+      font-weight: 900;
+
+      letter-spacing: -1px;
+
+    }
+
+
+
+    .logo span {
+
+      color: #ff3b30;
+
+    }
+
+
+
+    .nav-button {
+
+      color: #aaa;
+
+      text-decoration: none;
+
+      font-size: 14px;
+
+    }
+
+
+
+    .hero {
+
+      max-width: 900px;
+
+      margin: 70px auto 0;
+
+      padding: 20px;
+
+      text-align: center;
+
+    }
+
+
+
+    .badge {
+
+      display: inline-block;
+
+      padding: 8px 14px;
+
+      border: 1px solid #333;
+
+      border-radius: 100px;
+
+      background: #151515;
+
+      color: #bbb;
+
+      font-size: 13px;
+
+      margin-bottom: 25px;
+
+    }
+
+
 
     h1 {
-      margin-bottom: 10px;
+
+      font-size: clamp(42px, 8vw, 76px);
+
+      line-height: 0.95;
+
+      letter-spacing: -4px;
+
+      margin-bottom: 24px;
+
     }
 
-    p {
-      color: #666;
+
+
+    h1 span {
+
+      color: #ff3b30;
+
     }
 
-    input {
-      width: 100%;
-      padding: 15px;
-      margin-top: 20px;
-      box-sizing: border-box;
-      border: 1px solid #ddd;
-      border-radius: 10px;
-      font-size: 16px;
+
+
+    .subtitle {
+
+      max-width: 600px;
+
+      margin: auto;
+
+      color: #999;
+
+      font-size: 18px;
+
+      line-height: 1.6;
+
     }
 
-    button {
-      width: 100%;
-      padding: 15px;
-      margin-top: 15px;
-      border: none;
-      border-radius: 10px;
-      background: #111;
+
+
+    .converter {
+
+      max-width: 720px;
+
+      margin: 45px auto 0;
+
+      padding: 10px;
+
+      background: #151515;
+
+      border: 1px solid #2c2c2c;
+
+      border-radius: 18px;
+
+      display: flex;
+
+      gap: 10px;
+
+      box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+
+    }
+
+
+
+    .converter input {
+
+      flex: 1;
+
+      min-width: 0;
+
+      padding: 18px;
+
+      background: #0d0d0d;
+
       color: white;
-      font-size: 16px;
-      cursor: pointer;
+
+      border: 1px solid #292929;
+
+      border-radius: 12px;
+
+      font-size: 15px;
+
+      outline: none;
+
     }
 
-    button:hover {
-      opacity: 0.85;
+
+
+    .converter input:focus {
+
+      border-color: #555;
+
     }
+
+
+
+    .converter button {
+
+      padding: 0 28px;
+
+      border: none;
+
+      border-radius: 12px;
+
+      background: #ff3b30;
+
+      color: white;
+
+      font-weight: 800;
+
+      font-size: 15px;
+
+      cursor: pointer;
+
+      transition: transform 0.15s, opacity 0.15s;
+
+    }
+
+
+
+    .converter button:hover {
+
+      transform: translateY(-1px);
+
+      opacity: 0.9;
+
+    }
+
+
+
+    .converter button:disabled {
+
+      opacity: 0.6;
+
+      cursor: wait;
+
+    }
+
+
 
     #result {
-      margin-top: 20px;
+
+      margin-top: 18px;
+
+      min-height: 24px;
+
+      color: #aaa;
+
+      font-size: 14px;
+
     }
+
+
+
+    .features {
+
+      max-width: 900px;
+
+      margin: 80px auto 0;
+
+      padding: 20px;
+
+      display: grid;
+
+      grid-template-columns: repeat(3, 1fr);
+
+      gap: 18px;
+
+    }
+
+
+
+    .feature {
+
+      padding: 25px;
+
+      background: rgba(255,255,255,0.035);
+
+      border: 1px solid #242424;
+
+      border-radius: 16px;
+
+      text-align: left;
+
+    }
+
+
+
+    .icon {
+
+      font-size: 25px;
+
+      margin-bottom: 15px;
+
+    }
+
+
+
+    .feature h3 {
+
+      font-size: 16px;
+
+      margin-bottom: 8px;
+
+    }
+
+
+
+    .feature p {
+
+      color: #777;
+
+      font-size: 14px;
+
+      line-height: 1.5;
+
+    }
+
+
+
+    .how {
+
+      max-width: 800px;
+
+      margin: 90px auto;
+
+      padding: 20px;
+
+      text-align: center;
+
+    }
+
+
+
+    .how h2 {
+
+      font-size: 34px;
+
+      margin-bottom: 35px;
+
+    }
+
+
+
+    .steps {
+
+      display: grid;
+
+      grid-template-columns: repeat(3, 1fr);
+
+      gap: 20px;
+
+    }
+
+
+
+    .step {
+
+      color: #888;
+
+    }
+
+
+
+    .number {
+
+      width: 42px;
+
+      height: 42px;
+
+      margin: 0 auto 15px;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      border-radius: 50%;
+
+      background: #1c1c1c;
+
+      color: white;
+
+      font-weight: bold;
+
+    }
+
+
+
+    footer {
+
+      border-top: 1px solid #1d1d1d;
+
+      padding: 30px 20px;
+
+      text-align: center;
+
+      color: #555;
+
+      font-size: 13px;
+
+    }
+
+
+
+    @media (max-width: 650px) {
+
+      .hero {
+
+        margin-top: 40px;
+
+      }
+
+
+
+      .converter {
+
+        flex-direction: column;
+
+        padding: 12px;
+
+      }
+
+
+
+      .converter button {
+
+        padding: 17px;
+
+      }
+
+
+
+      .features,
+
+      .steps {
+
+        grid-template-columns: 1fr;
+
+      }
+
+
+
+      h1 {
+
+        letter-spacing: -2px;
+
+      }
+
+
+
+      .subtitle {
+
+        font-size: 16px;
+
+      }
+
+    }
+
   </style>
+
 </head>
+
+
 
 <body>
 
-  <div class="container">
-    <h1>YouTube naar MP3</h1>
 
-    <p>Plak hieronder een YouTube-link.</p>
 
-    <input
-      type="text"
-      id="youtubeUrl"
-      placeholder="https://www.youtube.com/watch?v=..."
-    >
+  <nav>
 
-    <button onclick="convertVideo()">
-      Converteer naar MP3
-    </button>
+    <div class="logo">MP3<span>FAST</span></div>
 
-    <div id="result"></div>
-  </div>
+    <a class="nav-button" href="#how">How it works</a>
+
+  </nav>
+
+
+
+  <main>
+
+
+
+    <section class="hero">
+
+
+
+      <div class="badge">⚡ Fast & simple audio conversion</div>
+
+
+
+      <h1>
+
+        Your video.<br>
+
+        Your <span>MP3.</span>
+
+      </h1>
+
+
+
+      <p class="subtitle">
+
+        Paste a video link below and convert it to an audio file
+
+        with MP3Fast.
+
+      </p>
+
+
+
+      <div class="converter">
+
+
+
+        <input
+
+          type="text"
+
+          id="youtubeUrl"
+
+          placeholder="Paste your video URL here..."
+
+          autocomplete="off"
+
+        >
+
+
+
+        <button id="convertButton" onclick="convertVideo()">
+
+          Convert to MP3
+
+        </button>
+
+
+
+      </div>
+
+
+
+      <div id="result"></div>
+
+
+
+    </section>
+
+
+
+    <section class="features">
+
+
+
+      <div class="feature">
+
+        <div class="icon">⚡</div>
+
+        <h3>Fast</h3>
+
+        <p>
+
+          Simple interface designed to get you from link to audio quickly.
+
+        </p>
+
+      </div>
+
+
+
+      <div class="feature">
+
+        <div class="icon">🎧</div>
+
+        <h3>Audio focused</h3>
+
+        <p>
+
+          Built specifically around converting video content into audio.
+
+        </p>
+
+      </div>
+
+
+
+      <div class="feature">
+
+        <div class="icon">📱</div>
+
+        <h3>Mobile friendly</h3>
+
+        <p>
+
+          Works beautifully on phones, tablets and desktop screens.
+
+        </p>
+
+      </div>
+
+
+
+    </section>
+
+
+
+    <section class="how" id="how">
+
+
+
+      <h2>How it works</h2>
+
+
+
+      <div class="steps">
+
+
+
+        <div class="step">
+
+          <div class="number">1</div>
+
+          <strong>Paste</strong>
+
+          <p>Paste your video link.</p>
+
+        </div>
+
+
+
+        <div class="step">
+
+          <div class="number">2</div>
+
+          <strong>Convert</strong>
+
+          <p>Press the convert button.</p>
+
+        </div>
+
+
+
+        <div class="step">
+
+          <div class="number">3</div>
+
+          <strong>Download</strong>
+
+          <p>Download your audio file.</p>
+
+        </div>
+
+
+
+      </div>
+
+
+
+    </section>
+
+
+
+  </main>
+
+
+
+  <footer>
+
+    © 2026 MP3Fast · Simple audio conversion
+
+  </footer>
+
+
 
   <script>
+
     async function convertVideo() {
-      const url = document.getElementById("youtubeUrl").value;
+
+      const input = document.getElementById("youtubeUrl");
+
+      const button = document.getElementById("convertButton");
+
       const result = document.getElementById("result");
 
+
+
+      const url = input.value.trim();
+
+
+
       if (!url) {
-        result.innerHTML = "Vul eerst een YouTube-link in.";
+
+        result.textContent = "Plak eerst een video-link.";
+
         return;
+
       }
 
-      result.innerHTML = "Even verwerken...";
 
-      const response = await fetch("/convert", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ url: url })
-      });
 
-      const data = await response.json();
+      button.disabled = true;
 
-      result.innerHTML = data.message || data.error;
+      button.textContent = "Processing...";
+
+      result.textContent = "Link wordt verwerkt...";
+
+
+
+      try {
+
+        const response = await fetch("/convert", {
+
+          method: "POST",
+
+          headers: {
+
+            "Content-Type": "application/json"
+
+          },
+
+          body: JSON.stringify({ url })
+
+        });
+
+
+
+        const data = await response.json();
+
+
+
+        result.textContent = data.message || data.error || "Er ging iets mis.";
+
+
+
+      } catch (error) {
+
+        result.textContent = "Er ging iets mis. Probeer het opnieuw.";
+
+      }
+
+
+
+      button.disabled = false;
+
+      button.textContent = "Convert to MP3";
+
     }
+
   </script>
 
+
+
 </body>
+
 </html>
+
+
+
