@@ -1,618 +1,398 @@
 <!DOCTYPE html>
-
-<html lang="nl">
-
+<html lang="en">
 <head>
-
   <meta charset="UTF-8">
-
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>MP3Fast – Convert your audio</title>
-
-
+  <title>MP3Fast – Your video. Your MP3.</title>
 
   <style>
-
     * {
-
       box-sizing: border-box;
-
       margin: 0;
-
       padding: 0;
-
     }
-
-
 
     body {
-
-      font-family: Arial, sans-serif;
-
+      font-family: Arial, Helvetica, sans-serif;
       background: #0b0b0f;
-
-      color: white;
-
+      color: #fff;
       min-height: 100vh;
-
     }
-
-
 
     header {
-
-      padding: 25px 7%;
-
+      padding: 28px 7%;
       display: flex;
-
       justify-content: space-between;
-
       align-items: center;
-
     }
-
-
 
     .logo {
-
-      font-size: 26px;
-
+      font-size: 27px;
       font-weight: 800;
-
       letter-spacing: -1px;
-
     }
-
-
 
     .logo span {
-
       color: #ff1744;
-
     }
-
-
 
     .badge {
-
-      background: #19191f;
-
+      background: #17171d;
+      color: #999;
       padding: 8px 14px;
-
       border-radius: 20px;
-
-      color: #aaa;
-
-      font-size: 13px;
-
+      font-size: 12px;
     }
-
-
 
     main {
-
       max-width: 900px;
-
-      margin: 70px auto;
-
+      margin: 80px auto 0;
       padding: 0 20px;
-
       text-align: center;
-
     }
-
-
 
     .tag {
-
-      display: inline-block;
-
       color: #ff1744;
-
+      font-size: 13px;
       font-weight: bold;
-
-      font-size: 14px;
-
+      letter-spacing: 1px;
       margin-bottom: 20px;
-
     }
-
-
 
     h1 {
-
-      font-size: clamp(42px, 8vw, 76px);
-
-      line-height: 0.95;
-
+      font-size: clamp(46px, 8vw, 78px);
+      line-height: .95;
       letter-spacing: -4px;
-
       margin-bottom: 25px;
-
     }
-
-
 
     h1 span {
-
       color: #ff1744;
-
     }
 
-
-
-    .intro {
-
-      color: #aaa;
-
+    .subtitle {
+      color: #999;
       font-size: 18px;
-
       line-height: 1.6;
-
-      max-width: 600px;
-
+      max-width: 580px;
       margin: 0 auto 40px;
-
     }
-
-
 
     .converter {
+      max-width: 720px;
+      margin: 0 auto;
+    }
 
+    .input-row {
+      display: flex;
+      gap: 10px;
       background: #15151b;
-
+      padding: 8px;
       border: 1px solid #292930;
-
-      border-radius: 24px;
-
-      padding: 30px;
-
-      max-width: 650px;
-
-      margin: auto;
-
-      box-shadow: 0 20px 60px rgba(0,0,0,.35);
-
+      border-radius: 15px;
     }
 
-
-
-    .upload-area {
-
-      border: 2px dashed #383842;
-
-      border-radius: 18px;
-
-      padding: 45px 20px;
-
-      cursor: pointer;
-
-      transition: .2s;
-
-    }
-
-
-
-    .upload-area:hover {
-
-      border-color: #ff1744;
-
-      background: #19191f;
-
-    }
-
-
-
-    .upload-icon {
-
-      font-size: 42px;
-
-      margin-bottom: 15px;
-
-    }
-
-
-
-    .upload-area h2 {
-
-      font-size: 21px;
-
-      margin-bottom: 8px;
-
-    }
-
-
-
-    .upload-area p {
-
-      color: #888;
-
-      font-size: 14px;
-
-    }
-
-
-
-    input[type="file"] {
-
-      display: none;
-
-    }
-
-
-
-    .file-name {
-
-      margin-top: 20px;
-
-      color: #ddd;
-
-      font-size: 14px;
-
-      min-height: 20px;
-
-    }
-
-
-
-    button {
-
-      width: 100%;
-
-      margin-top: 22px;
-
-      padding: 17px;
-
+    .input-row input {
+      flex: 1;
+      min-width: 0;
+      background: transparent;
       border: none;
-
-      border-radius: 12px;
-
-      background: #ff1744;
-
+      outline: none;
       color: white;
+      padding: 15px;
+      font-size: 15px;
+    }
 
-      font-size: 16px;
+    .input-row input::placeholder {
+      color: #666;
+    }
 
+    .convert-btn {
+      border: none;
+      background: #ff1744;
+      color: white;
+      padding: 0 25px;
+      border-radius: 10px;
       font-weight: bold;
-
       cursor: pointer;
-
+      font-size: 14px;
       transition: .2s;
-
     }
 
-
-
-    button:hover {
-
-      transform: translateY(-2px);
-
+    .convert-btn:hover {
       background: #ff3158;
-
+      transform: translateY(-1px);
     }
 
-
-
-    button:disabled {
-
-      opacity: .5;
-
-      cursor: not-allowed;
-
-      transform: none;
-
+    .upload-option {
+      margin-top: 17px;
+      color: #666;
+      font-size: 13px;
     }
 
-
-
-    .info {
-
-      margin-top: 18px;
-
-      color: #777;
-
-      font-size: 12px;
-
+    .upload-option label {
+      color: #aaa;
+      cursor: pointer;
+      text-decoration: underline;
+      text-underline-offset: 3px;
     }
 
+    .upload-option label:hover {
+      color: white;
+    }
 
+    #fileInput {
+      display: none;
+    }
+
+    #status {
+      margin-top: 15px;
+      min-height: 20px;
+      color: #999;
+      font-size: 13px;
+    }
 
     .features {
-
       display: grid;
-
       grid-template-columns: repeat(3, 1fr);
-
       gap: 15px;
-
-      margin-top: 50px;
-
+      margin-top: 70px;
     }
-
-
 
     .feature {
-
       background: #111116;
-
       border: 1px solid #22222a;
-
-      padding: 22px;
-
       border-radius: 16px;
-
+      padding: 24px 18px;
     }
 
-
+    .feature-icon {
+      font-size: 22px;
+      margin-bottom: 12px;
+    }
 
     .feature strong {
-
       display: block;
-
-      margin-bottom: 8px;
-
+      margin-bottom: 7px;
     }
-
-
 
     .feature p {
-
       color: #777;
-
       font-size: 13px;
-
       line-height: 1.5;
-
     }
 
+    .how {
+      margin-top: 70px;
+    }
 
+    .how h2 {
+      font-size: 28px;
+      margin-bottom: 30px;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .step {
+      color: #aaa;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .number {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: #ff1744;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 12px;
+      font-weight: bold;
+      color: white;
+    }
 
     footer {
-
-      text-align: center;
-
       color: #555;
-
-      padding: 50px 20px 30px;
-
+      text-align: center;
+      padding: 70px 20px 30px;
       font-size: 12px;
-
     }
-
-
 
     @media (max-width: 650px) {
-
       main {
-
-        margin-top: 40px;
-
+        margin-top: 50px;
       }
 
-
-
-      .converter {
-
-        padding: 18px;
-
+      .input-row {
+        flex-direction: column;
       }
 
+      .convert-btn {
+        padding: 15px;
+      }
 
-
-      .features {
-
+      .features,
+      .steps {
         grid-template-columns: 1fr;
-
       }
-
-
 
       h1 {
-
         letter-spacing: -2px;
-
       }
-
     }
-
   </style>
-
 </head>
-
-
 
 <body>
 
-
-
   <header>
-
     <div class="logo">MP3<span>FAST</span></div>
-
-    <div class="badge">Free converter</div>
-
+    <div class="badge">Fast & Simple</div>
   </header>
-
-
 
   <main>
 
-
-
     <div class="tag">FAST • SIMPLE • FREE</div>
 
-
-
     <h1>
-
-      Your file.<br>
-
+      Your video.<br>
       Your <span>MP3.</span>
-
     </h1>
 
-
-
-    <p class="intro">
-
-      Convert your own audio or video files to MP3 quickly and easily.
-
+    <p class="subtitle">
+      Convert your own or authorized media into high-quality MP3 audio.
+      Simple, fast and designed for every device.
     </p>
-
-
 
     <div class="converter">
 
+      <div class="input-row">
+        <input
+          id="urlInput"
+          type="text"
+          placeholder="Paste your video link here..."
+        >
 
-
-      <label class="upload-area" for="fileInput">
-
-        <div class="upload-icon">🎵</div>
-
-        <h2>Choose a file</h2>
-
-        <p>Click here to select an audio or video file</p>
-
-      </label>
-
-
-
-      <input
-
-        id="fileInput"
-
-        type="file"
-
-        accept="audio/*,video/*"
-
-      >
-
-
-
-      <div class="file-name" id="fileName">
-
-        No file selected
-
+        <button class="convert-btn" id="convertButton">
+          Convert to MP3
+        </button>
       </div>
 
-
-
-      <button id="convertButton" disabled>
-
-        Convert to MP3
-
-      </button>
-
-
-
-      <div class="info">
-
-        Only convert files you own or have permission to convert.
-
+      <div class="upload-option">
+        or
+        <label for="fileInput">upload your own file</label>
+        <input
+          id="fileInput"
+          type="file"
+          accept="audio/*,video/*"
+        >
       </div>
 
-
+      <div id="status"></div>
 
     </div>
-
-
 
     <div class="features">
 
-
-
       <div class="feature">
-
-        <strong>⚡ Fast</strong>
-
-        <p>Simple conversion without unnecessary steps.</p>
-
+        <div class="feature-icon">⚡</div>
+        <strong>Fast</strong>
+        <p>Quick and simple conversion with no unnecessary steps.</p>
       </div>
 
-
-
       <div class="feature">
-
-        <strong>🎧 MP3</strong>
-
-        <p>Get your audio in the familiar MP3 format.</p>
-
+        <div class="feature-icon">🎧</div>
+        <strong>Audio focused</strong>
+        <p>Get your music and audio in a clean MP3 format.</p>
       </div>
 
-
-
       <div class="feature">
-
-        <strong>📱 Mobile</strong>
-
-        <p>Designed to work smoothly on phones and computers.</p>
-
+        <div class="feature-icon">📱</div>
+        <strong>Mobile friendly</strong>
+        <p>Works smoothly on phones, tablets and computers.</p>
       </div>
-
-
 
     </div>
 
+    <section class="how">
 
+      <h2>How it works</h2>
+
+      <div class="steps">
+
+        <div class="step">
+          <div class="number">1</div>
+          <strong>Paste or upload</strong><br>
+          Add your own media file or an authorized link.
+        </div>
+
+        <div class="step">
+          <div class="number">2</div>
+          <strong>Convert</strong><br>
+          MP3Fast processes your audio.
+        </div>
+
+        <div class="step">
+          <div class="number">3</div>
+          <strong>Download</strong><br>
+          Get your MP3 when the conversion is complete.
+        </div>
+
+      </div>
+
+    </section>
 
   </main>
 
-
-
   <footer>
-
     © 2026 MP3Fast
-
   </footer>
 
-
-
   <script>
-
+    const urlInput = document.getElementById("urlInput");
     const fileInput = document.getElementById("fileInput");
-
-    const fileName = document.getElementById("fileName");
-
     const convertButton = document.getElementById("convertButton");
-
-
+    const status = document.getElementById("status");
 
     fileInput.addEventListener("change", () => {
-
       if (fileInput.files.length > 0) {
+        status.textContent = "Selected: " + fileInput.files[0].name;
+      }
+    });
 
-        fileName.textContent = fileInput.files[0].name;
+    convertButton.addEventListener("click", async () => {
+      const url = urlInput.value.trim();
 
-        convertButton.disabled = false;
-
-      } else {
-
-        fileName.textContent = "No file selected";
-
-        convertButton.disabled = true;
-
+      if (!url) {
+        status.textContent = "Please enter a link first.";
+        return;
       }
 
+      status.textContent = "Checking link...";
+
+      try {
+        const response = await fetch("/convert", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ url })
+        });
+
+        const data = await response.json();
+
+        status.textContent = data.error || data.message;
+
+      } catch (error) {
+        status.textContent = "Something went wrong. Please try again.";
+      }
     });
-
-
-
-    convertButton.addEventListener("click", () => {
-
-      alert("Bestand geselecteerd. De MP3-converter wordt in de volgende stap gekoppeld.");
-
-    });
-
   </script>
 
-
-
 </body>
-
 </html>
-
-</html>
-
-
-
